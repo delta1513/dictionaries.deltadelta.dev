@@ -1,12 +1,19 @@
+import Link from "next/link";
+import { getDictionaries } from "@/lib/dictionaries";
+
 export default function Home() {
+  const dictionaries = getDictionaries();
   return (
     <main>
       <h1>Dictionaries</h1>
-      <p>
-        A collection of personal glossaries. Each dictionary gathers the terms
-        and phrases I know in one field, such as software engineering.
-      </p>
-      <p>Dictionaries are coming soon.</p>
+      <ul className="dictionary-list">
+        {dictionaries.map((d) => (
+          <li key={d.slug}>
+            <Link href={`/${d.slug}`}>{d.title}</Link>
+            {d.description && <p>{d.description}</p>}
+          </li>
+        ))}
+      </ul>
     </main>
   );
 }

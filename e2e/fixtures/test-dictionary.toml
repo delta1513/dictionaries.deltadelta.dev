@@ -1,0 +1,15 @@
+# Test fixture. Not shown on the real site.
+title = "Test Dictionary"
+description = "Fixture used by the end-to-end tests."
+foreword = "A foreword for testing."
+
+[banana]
+definition = "A yellow fruit."
+
+["Apple Pie"]
+definition = "A baked dessert."
+extended_def = "Often served with cinnamon."
+
+[cherry]
+definition = "A small red fruit."
+see_also = ["Apple Pie"]

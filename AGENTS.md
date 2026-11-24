@@ -70,6 +70,11 @@ The Next.js version in this repository is new. It has breaking changes. Your tra
 | `package-lock.json` | Locked dependency versions. Commit it. |
 | `tsconfig.json` | TypeScript settings. The `@/*` alias points to the repository root. |
 | `eslint.config.mjs` | Lint rules |
+| `dictionaries/` | One TOML file for each dictionary. The file name is the URL slug. |
+| `lib/dictionaries.ts` | Reads and validates the TOML files at build time. The list of allowed fields is here. |
+| `app/[slug]/` | The one dictionary page. `EntryList.tsx` is a Client Component that sorts and searches. |
+| `e2e/` | Playwright tests. `e2e/fixtures/` holds test dictionaries. |
+| `playwright.config.ts` | Builds the fixtures with `DICTIONARIES_DIR=e2e/fixtures` and serves `out/` |
 | `out/` | Build output. Git ignores it. Do not edit it. |
 
 ## 4. Commands
@@ -82,6 +87,7 @@ The Next.js version in this repository is new. It has breaking changes. Your tra
 | `npm run lint` | Run ESLint |
 | `npm run preview` | Build, then serve `out/` with `wrangler dev` |
 | `npm run deploy` | Deploy by hand with `wrangler deploy` |
+| `npm run test:e2e` | Build the test fixtures and run the Playwright tests |
 
 Cloudflare runs `npm run build`. The `build.command` field in `wrangler.jsonc` sets this command. Do not remove that field.
 
@@ -166,6 +172,14 @@ Do these checks in order. Fix each problem before you go to the next check.
 4. Run `git status`. Make sure that no `out/`, `node_modules/`, `.env`, or `.wrangler/` files are staged.
 
 Optional: run `npm run preview` and open the local address. This shows the site in the Workers runtime. If you cannot open a browser, skip this step.
+
+### 9.1 Dictionary rules
+
+- Each dictionary is one TOML file in `dictionaries/`. Top-level text fields are dictionary fields. Top-level tables are words.
+- Sort words in the browser. Do not require the user to sort the file.
+- Do not add words to the user's dictionaries. Put test data in `e2e/fixtures/` only.
+- When you add a field, add it to `lib/dictionaries.ts` and to the field tables in `README.md`.
+- Run `npm run test:e2e` before you push. Playwright 1.63.0 matches the browser that is installed. Do not change its version unless the browser changes.
 
 ## 10. Git rules
 

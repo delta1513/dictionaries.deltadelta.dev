@@ -1,0 +1,14 @@
+# Software Engineering dictionary.
+# The file name (software-engineering) is the page URL: /software-engineering
+# Words can be in any order. The site sorts them.
+# See README.md for every supported field.
+
+title = "Software Engineering"
+foreword = """
+Terms I know from software engineering.
+"""
+
+["Ralph Loop"]
+etymology = "https://ghuntley.com/loop/"
+definition = "A bash for loop that activates an AI agent from the commandline to accomplish a long-horizon task"
+extended_def = "The reason this is effective is because AI agents have a finite context, and when a single one is put onto a long-horizon task, often their context is compacted and important details are lost. Using a Ralph Loop forces you to split-up your work into bite-sized chunks and send agents one-by-one to iterate on it"

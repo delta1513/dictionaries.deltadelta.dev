@@ -14,26 +14,36 @@ main {
   padding: 2rem 1rem 4rem;
 }
 
-h2 {
-  margin-top: 2.5rem;
-}
 
-blockquote {
-  margin: 1rem 0;
-  padding: 0.25rem 1rem;
-  border-left: 4px solid currentColor;
-  opacity: 0.8;
-}
 
-code {
-  font-family: ui-monospace, monospace;
-  padding: 0.1em 0.35em;
-  border-radius: 4px;
-  background: color-mix(in srgb, currentColor 12%, transparent);
-}
 
-footer {
-  margin-top: 3rem;
-  padding-top: 1rem;
-  border-top: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+
+a { color: inherit; }
+
+.dictionary-list { padding-left: 1.25rem; }
+.dictionary-list p { margin: 0 0 0.75rem; opacity: 0.75; }
+
+.subtitle, .author, .meta, .count, .etymology, .see-also { opacity: 0.7; }
+
+.controls {
+  display: flex;
+  gap: 0.5rem;
+  margin: 2rem 0 0.5rem;
+  position: sticky;
+  top: 0;
+  padding: 0.5rem 0;
+  background: Canvas;
 }
+.controls input { flex: 1; min-width: 0; }
+.controls input, .controls button { font: inherit; padding: 0.4rem 0.6rem; }
+
+.entries { display: grid; gap: 1rem; }
+.card {
+  border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  overflow-wrap: anywhere;
+}
+.card h3 { margin: 0 0 0.25rem; }
+.card p { margin: 0.4rem 0; }
+.etymology, .see-also { font-size: 0.9em; }

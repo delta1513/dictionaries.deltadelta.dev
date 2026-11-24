@@ -7,6 +7,7 @@ The site is static. Each dictionary is stored as a single file in the source rep
 ## Pages
 
 - [Home](https://dictionaries.deltadelta.dev/): List of all dictionaries
+- [Software Engineering](https://dictionaries.deltadelta.dev/software-engineering): Software engineering terms, searchable and sorted alphabetically
 
 ## Optional
 
