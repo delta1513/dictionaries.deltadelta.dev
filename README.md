@@ -13,6 +13,8 @@ Open the dictionary file in `dictionaries/` and add a block anywhere in the file
 definition = "A bash for loop that ..."
 ```
 
+A draft word with no definition yet is just the header: `["Some Term"]`.
+
 Quote the word in the brackets if it contains spaces or punctuation. Use `"""` for text that spans several lines.
 
 ## Adding a dictionary
@@ -37,14 +39,14 @@ Word fields:
 
 | Field | Required | Purpose |
 | --- | --- | --- |
-| `definition` | yes | Short definition |
+| `definition` | no | Short definition. Leave it out for a draft word: the card shows "Definition coming soon." |
 | `extended_def` | no | Longer explanation |
 | `etymology` | no | Origin. A URL is shown as a link. |
 | `pronunciation` | no | Pronunciation |
 | `part_of_speech` | no | For example `noun` |
 | `see_also` | no | List of related words, e.g. `["Agent"]` |
 
-Unknown fields or a missing `definition` stop the build with an error that names the file and word, so typos never reach the live site.
+Unknown fields stop the build with an error that names the file and word, so typos never reach the live site.
 
 ## Development
 

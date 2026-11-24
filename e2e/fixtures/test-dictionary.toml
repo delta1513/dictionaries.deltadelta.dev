@@ -13,3 +13,6 @@ extended_def = "Often served with cinnamon."
 [cherry]
 definition = "A small red fruit."
 see_also = ["Apple Pie"]
+
+[durian]
+etymology = "Malay"

@@ -51,3 +51,12 @@ a { color: inherit; }
 .etymology, .see-also { font-size: 0.9em; }
 .card .definition { font-size: 1.15rem; }
 .card .extended { font-style: italic; font-size: 0.95rem; opacity: 0.7; }
+
+h1, h2, h3, .controls { font-family: system-ui, "Helvetica Neue", Arial, sans-serif; }
+.card h3 { font-size: 1.9rem; line-height: 1.2; margin-bottom: 0.4rem; }
+.card hr {
+  border: 0;
+  border-top: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+  margin: 0.75rem 0 0.5rem;
+}
+.card .draft { font-style: italic; opacity: 0.5; }

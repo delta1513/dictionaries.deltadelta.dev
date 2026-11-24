@@ -15,12 +15,12 @@ test("index lists every dictionary and links to it", async ({ page }) => {
 
 test("words are sorted A to Z and the dropdown reverses them", async ({ page }) => {
   await page.goto("/test-dictionary");
-  expect(await terms(page)).toEqual(["Apple Pie", "banana", "cherry"]);
+  expect(await terms(page)).toEqual(["Apple Pie", "banana", "cherry", "durian"]);
   const sort = page.getByRole("combobox", { name: "Sort" });
   await sort.selectOption("desc");
-  expect(await terms(page)).toEqual(["cherry", "banana", "Apple Pie"]);
+  expect(await terms(page)).toEqual(["durian", "cherry", "banana", "Apple Pie"]);
   await sort.selectOption("asc");
-  expect(await terms(page)).toEqual(["Apple Pie", "banana", "cherry"]);
+  expect(await terms(page)).toEqual(["Apple Pie", "banana", "cherry", "durian"]);
 });
 
 test("search matches words, definitions and extended definitions", async ({ page }) => {
@@ -34,7 +34,7 @@ test("search matches words, definitions and extended definitions", async ({ page
   expect(await terms(page)).toEqual(["Apple Pie"]);
   await search.fill("nothing matches this");
   await expect(page.locator(".card")).toHaveCount(0);
-  await expect(page.getByText("0 of 3 words")).toBeVisible();
+  await expect(page.getByText("0 of 4 words")).toBeVisible();
 });
 
 test("unknown pages show the 404 page", async ({ page }) => {
@@ -49,4 +49,11 @@ test("search and sort stay visible while scrolling", async ({ page }) => {
   await page.mouse.wheel(0, 2000);
   await expect(page.getByRole("searchbox", { name: "Search" })).toBeInViewport();
   await expect(page.getByRole("combobox", { name: "Sort" })).toBeInViewport();
+});
+
+test("draft words without a definition still render", async ({ page }) => {
+  await page.goto("/test-dictionary");
+  const card = page.locator("#durian");
+  await expect(card.getByText("Definition coming soon.")).toBeVisible();
+  await expect(card.locator("hr")).toHaveCount(1);
 });

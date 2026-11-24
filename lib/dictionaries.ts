@@ -6,7 +6,7 @@ import { parse } from "smol-toml";
 
 export type Entry = {
   term: string;
-  definition: string;
+  definition?: string; // Missing means a draft word.
   extended_def?: string;
   etymology?: string;
   pronunciation?: string;
@@ -82,7 +82,7 @@ function load(file: string): Dictionary {
 }
 
 function parseEntry(file: string, term: string, t: Record<string, unknown>): Entry {
-  const entry: Entry = { term, definition: "" };
+  const entry: Entry = { term };
   for (const [key, value] of Object.entries(t)) {
     if (key === "see_also") {
       if (!Array.isArray(value) || !value.every((v) => typeof v === "string")) {
@@ -96,7 +96,6 @@ function parseEntry(file: string, term: string, t: Record<string, unknown>): Ent
       fail(file, `["${term}"] unknown field "${key}"`);
     }
   }
-  if (!entry.definition) fail(file, `["${term}"] missing required field "definition"`);
   return entry;
 }
 

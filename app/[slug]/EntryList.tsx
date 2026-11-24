@@ -17,7 +17,7 @@ export default function EntryList({ entries }: { entries: Entry[] }) {
     const q = query.trim().toLowerCase();
     const filtered = q
       ? entries.filter((e) =>
-          [e.term, e.definition, e.extended_def ?? ""].some((s) => s.toLowerCase().includes(q)),
+          [e.term, e.definition ?? "", e.extended_def ?? ""].some((s) => s.toLowerCase().includes(q)),
         )
       : entries;
     return [...filtered].sort((a, b) => (ascending ? 1 : -1) * collator.compare(a.term, b.term));
@@ -54,9 +54,15 @@ export default function EntryList({ entries }: { entries: Entry[] }) {
                 {[e.pronunciation, e.part_of_speech].filter(Boolean).join(" · ")}
               </p>
             )}
-            <p className="definition">{e.definition}</p>
+            {e.definition ? (
+              <p className="definition">{e.definition}</p>
+            ) : (
+              <p className="draft">Definition coming soon.</p>
+            )}
             {e.extended_def && <p className="extended">{e.extended_def}</p>}
             {e.etymology && (
+              <>
+              <hr />
               <p className="etymology">
                 Etymology:{" "}
                 {/^https?:\/\//.test(e.etymology) ? (
@@ -65,6 +71,7 @@ export default function EntryList({ entries }: { entries: Entry[] }) {
                   e.etymology
                 )}
               </p>
+              </>
             )}
             {e.see_also && e.see_also.length > 0 && (
               <p className="see-also">
