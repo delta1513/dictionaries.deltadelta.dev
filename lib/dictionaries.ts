@@ -6,7 +6,8 @@ import { parse } from "smol-toml";
 
 export type Entry = {
   term: string;
-  definition?: string; // Missing means a draft word.
+  definition?: string[]; // Missing or empty means a draft word.
+  synonyms?: string[];
   extended_def?: string;
   etymology?: string;
   pronunciation?: string;
@@ -41,7 +42,7 @@ const META_KEYS = [
   "license", "isbn",
 ] as const;
 const ENTRY_STRING_KEYS = [
-  "definition", "extended_def", "etymology", "pronunciation", "part_of_speech",
+  "extended_def", "etymology", "pronunciation", "part_of_speech",
 ] as const;
 
 const DIR = path.resolve(process.env.DICTIONARIES_DIR ?? "dictionaries");
@@ -84,11 +85,11 @@ function load(file: string): Dictionary {
 function parseEntry(file: string, term: string, t: Record<string, unknown>): Entry {
   const entry: Entry = { term };
   for (const [key, value] of Object.entries(t)) {
-    if (key === "see_also") {
+    if (key === "definition" || key === "synonyms" || key === "see_also") {
       if (!Array.isArray(value) || !value.every((v) => typeof v === "string")) {
-        fail(file, `["${term}"] see_also must be a list of text`);
+        fail(file, `["${term}"] ${key} must be a list of text, like ${key} = ["..."]`);
       }
-      entry.see_also = value;
+      entry[key] = value.map((v) => v.trim()).filter(Boolean);
     } else if ((ENTRY_STRING_KEYS as readonly string[]).includes(key)) {
       if (typeof value !== "string") fail(file, `["${term}"] ${key} must be text`);
       (entry as Record<string, unknown>)[key] = value.trim();

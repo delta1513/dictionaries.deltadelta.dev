@@ -1,4 +1,4 @@
 title = "Another Dictionary"
 
 [zebra]
-definition = "A striped animal."
+definition = ["A striped animal."]

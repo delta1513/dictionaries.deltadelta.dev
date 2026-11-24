@@ -4,14 +4,15 @@ description = "Fixture used by the end-to-end tests."
 foreword = "A foreword for testing."
 
 [banana]
-definition = "A yellow fruit."
+definition = ["A yellow fruit.", "A curved shape."]
+synonyms = ["plantain", "cherry"]
 
 ["Apple Pie"]
-definition = "A baked dessert."
+definition = ["A baked dessert."]
 extended_def = "Often served with cinnamon."
 
 [cherry]
-definition = "A small red fruit."
+definition = ["A small red fruit."]
 see_also = ["Apple Pie"]
 
 [durian]

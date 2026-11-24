@@ -57,3 +57,13 @@ test("draft words without a definition still render", async ({ page }) => {
   await expect(card.getByText("Definition coming soon.")).toBeVisible();
   await expect(card.locator("hr")).toHaveCount(1);
 });
+
+test("multiple definitions render as a numbered list, with synonyms", async ({ page }) => {
+  await page.goto("/test-dictionary");
+  const card = page.locator("#banana");
+  await expect(card.locator("ol.definition li")).toHaveText(["A yellow fruit.", "A curved shape."]);
+  await expect(card.locator(".synonyms")).toHaveText("Synonyms: plantain, cherry");
+  await expect(card.locator('.synonyms a[href="#cherry"]')).toHaveCount(1);
+  await page.getByRole("searchbox", { name: "Search" }).fill("curved");
+  expect(await terms(page)).toEqual(["banana"]);
+});

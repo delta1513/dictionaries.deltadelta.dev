@@ -10,7 +10,11 @@ Open the dictionary file in `dictionaries/` and add a block anywhere in the file
 
 ```toml
 ["Ralph Loop"]
-definition = "A bash for loop that ..."
+definition = [
+  "A bash for loop that ...",
+  "A second meaning, if there is one.",
+]
+synonyms = ["Agent Loop"]
 ```
 
 A draft word with no definition yet is just the header: `["Some Term"]`.
@@ -39,7 +43,8 @@ Word fields:
 
 | Field | Required | Purpose |
 | --- | --- | --- |
-| `definition` | no | Short definition. Leave it out for a draft word: the card shows "Definition coming soon." |
+| `definition` | no | List of definitions, shown as a numbered list. Always a list, even for one: `["..."]`. Leave it out for a draft word: the card shows "Definition coming soon." |
+| `synonyms` | no | List of synonyms. A synonym that is also a word in the same dictionary links to its card. |
 | `extended_def` | no | Longer explanation |
 | `etymology` | no | Origin. A URL is shown as a link. |
 | `pronunciation` | no | Pronunciation |

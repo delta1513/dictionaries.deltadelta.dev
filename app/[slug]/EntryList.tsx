@@ -13,11 +13,13 @@ export default function EntryList({ entries }: { entries: Entry[] }) {
   const [query, setQuery] = useState("");
   const [ascending, setAscending] = useState(true);
 
+  const terms = useMemo(() => new Set(entries.map((e) => e.term.toLowerCase())), [entries]);
+
   const shown = useMemo(() => {
     const q = query.trim().toLowerCase();
     const filtered = q
       ? entries.filter((e) =>
-          [e.term, e.definition ?? "", e.extended_def ?? ""].some((s) => s.toLowerCase().includes(q)),
+          [e.term, ...(e.definition ?? []), e.extended_def ?? ""].some((s) => s.toLowerCase().includes(q)),
         )
       : entries;
     return [...filtered].sort((a, b) => (ascending ? 1 : -1) * collator.compare(a.term, b.term));
@@ -54,12 +56,25 @@ export default function EntryList({ entries }: { entries: Entry[] }) {
                 {[e.pronunciation, e.part_of_speech].filter(Boolean).join(" · ")}
               </p>
             )}
-            {e.definition ? (
-              <p className="definition">{e.definition}</p>
+            {e.definition?.length ? (
+              <ol className="definition">
+                {e.definition.map((d, i) => <li key={i}>{d}</li>)}
+              </ol>
             ) : (
               <p className="draft">Definition coming soon.</p>
             )}
             {e.extended_def && <p className="extended">{e.extended_def}</p>}
+            {e.synonyms && e.synonyms.length > 0 && (
+              <p className="synonyms">
+                Synonyms:{" "}
+                {e.synonyms.map((s, i) => (
+                  <span key={s}>
+                    {i > 0 && ", "}
+                    {terms.has(s.toLowerCase()) ? <a href={`#${anchor(s)}`}>{s}</a> : s}
+                  </span>
+                ))}
+              </p>
+            )}
             {e.etymology && (
               <>
               <hr />
