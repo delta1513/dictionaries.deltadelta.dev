@@ -72,7 +72,7 @@ The Next.js version in this repository is new. It has breaking changes. Your tra
 | `eslint.config.mjs` | Lint rules |
 | `dictionaries/` | One TOML file for each dictionary. The file name is the URL slug. |
 | `lib/dictionaries.ts` | Reads and validates the TOML files at build time. The list of allowed fields is here. |
-| `app/[slug]/` | The one dictionary page. `EntryList.tsx` is a Client Component that sorts and searches. |
+| `app/[slug]/` | The one dictionary page. `EntryList.tsx` is a Client Component that sorts (dropdown) and searches. The search bar and sort dropdown are sticky. |
 | `e2e/` | Playwright tests. `e2e/fixtures/` holds test dictionaries. |
 | `playwright.config.ts` | Builds the fixtures with `DICTIONARIES_DIR=e2e/fixtures` and serves `out/` |
 | `out/` | Build output. Git ignores it. Do not edit it. |

@@ -13,12 +13,13 @@ test("index lists every dictionary and links to it", async ({ page }) => {
   await expect(page.getByText("A foreword for testing.")).toBeVisible();
 });
 
-test("words are sorted A to Z and the button reverses them", async ({ page }) => {
+test("words are sorted A to Z and the dropdown reverses them", async ({ page }) => {
   await page.goto("/test-dictionary");
   expect(await terms(page)).toEqual(["Apple Pie", "banana", "cherry"]);
-  await page.getByRole("button", { name: "A → Z" }).click();
+  const sort = page.getByRole("combobox", { name: "Sort" });
+  await sort.selectOption("desc");
   expect(await terms(page)).toEqual(["cherry", "banana", "Apple Pie"]);
-  await page.getByRole("button", { name: "Z → A" }).click();
+  await sort.selectOption("asc");
   expect(await terms(page)).toEqual(["Apple Pie", "banana", "cherry"]);
 });
 
@@ -40,4 +41,12 @@ test("unknown pages show the 404 page", async ({ page }) => {
   const res = await page.goto("/no-such-dictionary");
   expect(res?.status()).toBe(404);
   await expect(page.getByRole("heading", { name: "Not found" })).toBeVisible();
+});
+
+test("search and sort stay visible while scrolling", async ({ page }) => {
+  await page.setViewportSize({ width: 800, height: 300 });
+  await page.goto("/test-dictionary");
+  await page.mouse.wheel(0, 2000);
+  await expect(page.getByRole("searchbox", { name: "Search" })).toBeInViewport();
+  await expect(page.getByRole("combobox", { name: "Sort" })).toBeInViewport();
 });

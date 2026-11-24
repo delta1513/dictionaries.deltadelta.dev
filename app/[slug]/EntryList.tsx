@@ -33,9 +33,14 @@ export default function EntryList({ entries }: { entries: Entry[] }) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        <button type="button" onClick={() => setAscending((a) => !a)}>
-          {ascending ? "A → Z" : "Z → A"}
-        </button>
+        <select
+          aria-label="Sort"
+          value={ascending ? "asc" : "desc"}
+          onChange={(e) => setAscending(e.target.value === "asc")}
+        >
+          <option value="asc">A → Z</option>
+          <option value="desc">Z → A</option>
+        </select>
       </div>
       <p className="count" aria-live="polite">
         {shown.length} of {entries.length} {entries.length === 1 ? "word" : "words"}
@@ -49,7 +54,7 @@ export default function EntryList({ entries }: { entries: Entry[] }) {
                 {[e.pronunciation, e.part_of_speech].filter(Boolean).join(" · ")}
               </p>
             )}
-            <p>{e.definition}</p>
+            <p className="definition">{e.definition}</p>
             {e.extended_def && <p className="extended">{e.extended_def}</p>}
             {e.etymology && (
               <p className="etymology">
