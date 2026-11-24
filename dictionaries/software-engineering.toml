@@ -142,3 +142,39 @@ noun = [
 ["Local"]
 
 ["Domain"]
+
+["Reentrant"]
+
+["Crash"]
+
+["Wrap"]
+
+["Wrapper"]
+
+["Down"]
+
+["Incident"]
+
+["Staging"]
+
+["Continuous Deployment"]
+
+["Continuous Integration"]
+
+["Log"]
+
+["Logging"]
+
+["Software Factory"]
+synonyms = ["Dark Factory", "Gas Town"]
+
+["Routine"]
+
+["Long-Horizon"]
+
+["Context"]
+
+["Compaction"]
+
+["Eval"]
+synonyms = ["Evaluation Framework"]
