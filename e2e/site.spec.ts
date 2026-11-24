@@ -15,12 +15,12 @@ test("index lists every dictionary and links to it", async ({ page }) => {
 
 test("words are sorted A to Z and the dropdown reverses them", async ({ page }) => {
   await page.goto("/test-dictionary");
-  expect(await terms(page)).toEqual(["Apple Pie", "banana", "cherry", "durian"]);
+  expect(await terms(page)).toEqual(["Apple Pie", "banana", "cherry", "durian", "elder"]);
   const sort = page.getByRole("combobox", { name: "Sort" });
   await sort.selectOption("desc");
-  expect(await terms(page)).toEqual(["durian", "cherry", "banana", "Apple Pie"]);
+  expect(await terms(page)).toEqual(["elder", "durian", "cherry", "banana", "Apple Pie"]);
   await sort.selectOption("asc");
-  expect(await terms(page)).toEqual(["Apple Pie", "banana", "cherry", "durian"]);
+  expect(await terms(page)).toEqual(["Apple Pie", "banana", "cherry", "durian", "elder"]);
 });
 
 test("search matches words, definitions and extended definitions", async ({ page }) => {
@@ -34,7 +34,7 @@ test("search matches words, definitions and extended definitions", async ({ page
   expect(await terms(page)).toEqual(["Apple Pie"]);
   await search.fill("nothing matches this");
   await expect(page.locator(".card")).toHaveCount(0);
-  await expect(page.getByText("0 of 4 words")).toBeVisible();
+  await expect(page.getByText("0 of 5 words")).toBeVisible();
 });
 
 test("unknown pages show the 404 page", async ({ page }) => {
@@ -66,4 +66,16 @@ test("multiple definitions render as a numbered list, with synonyms", async ({ p
   await expect(card.locator('.synonyms a[href="#cherry"]')).toHaveCount(1);
   await page.getByRole("searchbox", { name: "Search" }).fill("curved");
   expect(await terms(page)).toEqual(["banana"]);
+});
+
+test("definitions grouped by part of speech keep file order", async ({ page }) => {
+  await page.goto("/test-dictionary");
+  const card = page.locator("#elder");
+  await expect(card.locator(".pos")).toHaveText(["adjective", "noun"]);
+  await expect(card.locator(".sense").nth(1).locator("li")).toHaveText([
+    "A respected older person.",
+    "A small tree.",
+  ]);
+  await page.getByRole("searchbox", { name: "Search" }).fill("small tree");
+  expect(await terms(page)).toEqual(["elder"]);
 });

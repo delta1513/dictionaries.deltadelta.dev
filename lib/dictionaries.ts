@@ -4,14 +4,21 @@ import { parse } from "smol-toml";
 
 // This module runs at build time only (Server Components).
 
+export const PARTS_OF_SPEECH = [
+  "noun", "verb", "adjective", "adverb", "pronoun", "preposition",
+  "conjunction", "interjection", "phrase", "abbreviation", "prefix", "suffix",
+] as const;
+export type PartOfSpeech = (typeof PARTS_OF_SPEECH)[number];
+
 export type Entry = {
   term: string;
-  definition?: string[]; // Missing or empty means a draft word.
+  // Definitions grouped by part of speech. `pos` is absent for a plain list.
+  // Empty means a draft word.
+  definitions: { pos?: PartOfSpeech; items: string[] }[];
   synonyms?: string[];
   extended_def?: string;
   etymology?: string;
   pronunciation?: string;
-  part_of_speech?: string;
   see_also?: string[];
 };
 
@@ -42,7 +49,7 @@ const META_KEYS = [
   "license", "isbn",
 ] as const;
 const ENTRY_STRING_KEYS = [
-  "extended_def", "etymology", "pronunciation", "part_of_speech",
+  "extended_def", "etymology", "pronunciation",
 ] as const;
 
 const DIR = path.resolve(process.env.DICTIONARIES_DIR ?? "dictionaries");
@@ -83,13 +90,12 @@ function load(file: string): Dictionary {
 }
 
 function parseEntry(file: string, term: string, t: Record<string, unknown>): Entry {
-  const entry: Entry = { term };
+  const entry: Entry = { term, definitions: [] };
   for (const [key, value] of Object.entries(t)) {
-    if (key === "definition" || key === "synonyms" || key === "see_also") {
-      if (!Array.isArray(value) || !value.every((v) => typeof v === "string")) {
-        fail(file, `["${term}"] ${key} must be a list of text, like ${key} = ["..."]`);
-      }
-      entry[key] = value.map((v) => v.trim()).filter(Boolean);
+    if (key === "definition") {
+      entry.definitions = parseDefinitions(file, term, value);
+    } else if (key === "synonyms" || key === "see_also") {
+      entry[key] = textList(file, `["${term}"] ${key}`, value);
     } else if ((ENTRY_STRING_KEYS as readonly string[]).includes(key)) {
       if (typeof value !== "string") fail(file, `["${term}"] ${key} must be text`);
       (entry as Record<string, unknown>)[key] = value.trim();
@@ -98,6 +104,30 @@ function parseEntry(file: string, term: string, t: Record<string, unknown>): Ent
     }
   }
   return entry;
+}
+
+function textList(file: string, where: string, value: unknown): string[] {
+  if (!Array.isArray(value) || !value.every((v) => typeof v === "string")) {
+    fail(file, `${where} must be a list of text, like ["..."]`);
+  }
+  return value.map((v) => v.trim()).filter(Boolean);
+}
+
+function parseDefinitions(file: string, term: string, value: unknown): Entry["definitions"] {
+  if (Array.isArray(value)) {
+    const items = textList(file, `["${term}"] definition`, value);
+    return items.length ? [{ items }] : [];
+  }
+  if (!isTable(value)) {
+    fail(file, `["${term}"] definition must be a list, or a ["${term}".definition] table`);
+  }
+  return Object.entries(value).flatMap(([pos, list]) => {
+    if (!(PARTS_OF_SPEECH as readonly string[]).includes(pos)) {
+      fail(file, `["${term}".definition] unknown part of speech "${pos}". Use one of: ${PARTS_OF_SPEECH.join(", ")}`);
+    }
+    const items = textList(file, `["${term}".definition] ${pos}`, list);
+    return items.length ? [{ pos: pos as PartOfSpeech, items }] : [];
+  });
 }
 
 let cache: Dictionary[] | undefined;

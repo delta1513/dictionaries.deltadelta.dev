@@ -17,3 +17,10 @@ see_also = ["Apple Pie"]
 
 [durian]
 etymology = "Malay"
+
+[elder]
+synonyms = ["older"]
+
+[elder.definition]
+adjective = ["Older of two people."]
+noun = ["A respected older person.", "A small tree."]

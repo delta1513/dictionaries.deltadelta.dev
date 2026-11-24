@@ -13,6 +13,15 @@
 #   synonyms = ["Other Word", "Another Word"]
 #   extended_def = "A longer explanation."
 #   etymology = "https://example.com/origin"
+#
+# For a word with several parts of speech, give each its own list:
+#
+#   ["Example Word".definition]
+#   noun = ["A meaning as a noun."]
+#   verb = ["A meaning as a verb."]
+#
+# Allowed parts of speech: noun, verb, adjective, adverb, pronoun,
+# preposition, conjunction, interjection, phrase, abbreviation, prefix, suffix.
 
 title = "Software Engineering"
 foreword = """
@@ -29,6 +38,14 @@ definition = ["A way of doing things where you declare the end result, and the s
 extended_def = "An example of this is HTML. In HTML you can define a button, and it will display a button on the screen without you having to figure out how to render such a thing."
 
 ["Deploy"]
+
+["Deploy".definition]
+verb = [
+  "To release software to an environment where it runs and can be used.",
+]
+noun = [
+  "Informal: a single release of software to an environment.",
+]
 
 ["Deployment"]
 

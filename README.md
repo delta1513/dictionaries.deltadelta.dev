@@ -21,6 +21,21 @@ A draft word with no definition yet is just the header: `["Some Term"]`.
 
 Quote the word in the brackets if it contains spaces or punctuation. Use `"""` for text that spans several lines.
 
+### Parts of speech
+
+For a word that is, for example, both a verb and a noun, put the definitions in a sub-table. The header repeats the word exactly, then `.definition`:
+
+```toml
+["Deploy"]
+synonyms = ["Ship"]
+
+["Deploy".definition]
+verb = ["To release software to an environment."]
+noun = ["Informal: a single release."]
+```
+
+Each part of speech shows as an italic label with its own numbered list, in the order written. Allowed labels: `noun`, `verb`, `adjective`, `adverb`, `pronoun`, `preposition`, `conjunction`, `interjection`, `phrase`, `abbreviation`, `prefix`, `suffix`. Any other label stops the build.
+
 ## Adding a dictionary
 
 Create a new file `dictionaries/<name>.toml`. The file name becomes the URL (`/<name>`), so use only lowercase letters, numbers and hyphens. The only required field is `title`.
@@ -43,12 +58,11 @@ Word fields:
 
 | Field | Required | Purpose |
 | --- | --- | --- |
-| `definition` | no | List of definitions, shown as a numbered list. Always a list, even for one: `["..."]`. Leave it out for a draft word: the card shows "Definition coming soon." |
+| `definition` | no | List of definitions, shown as a numbered list. Always a list, even for one: `["..."]`. Or a `["Word".definition]` table with one list per part of speech (see below). Leave it out for a draft word: the card shows "Definition coming soon." |
 | `synonyms` | no | List of synonyms. A synonym that is also a word in the same dictionary links to its card. |
 | `extended_def` | no | Longer explanation |
 | `etymology` | no | Origin. A URL is shown as a link. |
 | `pronunciation` | no | Pronunciation |
-| `part_of_speech` | no | For example `noun` |
 | `see_also` | no | List of related words, e.g. `["Agent"]` |
 
 Unknown fields stop the build with an error that names the file and word, so typos never reach the live site.

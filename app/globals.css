@@ -61,3 +61,4 @@ h1, h2, h3, .controls { font-family: system-ui, "Helvetica Neue", Arial, sans-se
   margin: 0.75rem 0 0.5rem;
 }
 .card .draft { font-style: italic; opacity: 0.5; }
+.card .pos { font-style: italic; opacity: 0.7; margin: 0.6rem 0 0; }

@@ -19,7 +19,7 @@ export default function EntryList({ entries }: { entries: Entry[] }) {
     const q = query.trim().toLowerCase();
     const filtered = q
       ? entries.filter((e) =>
-          [e.term, ...(e.definition ?? []), e.extended_def ?? ""].some((s) => s.toLowerCase().includes(q)),
+          [e.term, ...e.definitions.flatMap((d) => d.items), e.extended_def ?? ""].some((s) => s.toLowerCase().includes(q)),
         )
       : entries;
     return [...filtered].sort((a, b) => (ascending ? 1 : -1) * collator.compare(a.term, b.term));
@@ -51,15 +51,16 @@ export default function EntryList({ entries }: { entries: Entry[] }) {
         {shown.map((e) => (
           <article className="card" key={e.term} id={anchor(e.term)}>
             <h3>{e.term}</h3>
-            {(e.pronunciation || e.part_of_speech) && (
-              <p className="meta">
-                {[e.pronunciation, e.part_of_speech].filter(Boolean).join(" · ")}
-              </p>
-            )}
-            {e.definition?.length ? (
-              <ol className="definition">
-                {e.definition.map((d, i) => <li key={i}>{d}</li>)}
-              </ol>
+            {e.pronunciation && <p className="meta">{e.pronunciation}</p>}
+            {e.definitions.length ? (
+              e.definitions.map((group, gi) => (
+                <section className="sense" key={gi}>
+                  {group.pos && <p className="pos">{group.pos}</p>}
+                  <ol className="definition">
+                    {group.items.map((d, i) => <li key={i}>{d}</li>)}
+                  </ol>
+                </section>
+              ))
             ) : (
               <p className="draft">Definition coming soon.</p>
             )}

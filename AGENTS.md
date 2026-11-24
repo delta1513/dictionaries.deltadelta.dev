@@ -175,7 +175,7 @@ Optional: run `npm run preview` and open the local address. This shows the site 
 
 ### 9.1 Dictionary rules
 
-- Each dictionary is one TOML file in `dictionaries/`. Top-level text fields are dictionary fields. Top-level tables are words. `definition`, `synonyms` and `see_also` are lists of text. A word without `definition` is a draft. Show it, do not fail the build.
+- Each dictionary is one TOML file in `dictionaries/`. Top-level text fields are dictionary fields. Top-level tables are words. `definition` is a list of text, or a table of part of speech to list of text (see `PARTS_OF_SPEECH`). `synonyms` and `see_also` are lists of text. A word without `definition` is a draft. Show it, do not fail the build.
 - Sort words in the browser. Do not require the user to sort the file.
 - Do not add words to the user's dictionaries. Put test data in `e2e/fixtures/` only.
 - When you add a field, add it to `lib/dictionaries.ts` and to the field tables in `README.md`.
