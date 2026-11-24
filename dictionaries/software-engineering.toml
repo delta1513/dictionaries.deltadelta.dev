@@ -10,5 +10,9 @@ Terms I know from software engineering.
 
 ["Ralph Loop"]
 etymology = "https://ghuntley.com/loop/"
-definition = "A bash for loop that activates an AI agent from the commandline to accomplish a long-horizon task"
+definition = "A bash for loop that activates an AI agent from the commandline to accomplish a long-horizon task one small step at a time."
 extended_def = "The reason this is effective is because AI agents have a finite context, and when a single one is put onto a long-horizon task, often their context is compacted and important details are lost. Using a Ralph Loop forces you to split-up your work into bite-sized chunks and send agents one-by-one to iterate on it"
+
+["Declarative"]
+definition = "A way of doing things where you declare the end result, and the system or software will get you there."
+extended_def = "An example of this is HTML. In HTML you can define a button, and it will display a button on the screen without you having to figure out how to render such a thing."
