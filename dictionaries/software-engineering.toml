@@ -30,24 +30,28 @@ Terms I know from software engineering.
 
 ["Ralph Loop"]
 etymology = "https://ghuntley.com/loop/"
-definition = ["A bash for loop that activates an AI agent from the commandline to accomplish a long-horizon task one small step at a time."]
-extended_def = "The reason this is effective is because AI agents have a finite context, and when a single one is put onto a long-horizon task, often their context is compacted and important details are lost. Using a Ralph Loop forces you to split-up your work into bite-sized chunks and send agents one-by-one to iterate on it"
+extended_def = "The reason this was created is because AI agents have a finite context, and when a single one is assigned a long-horizon task, often its context is compacted after some time, and important details are lost. Using a Ralph Loop forces you (or your AI agent) to split-up your work into bite-sized chunks and send agents one-by-one to iterate on it"
+
+["Ralph Loop".definition]
+noun = ["A software loop that activates an AI coding agent from the command-line to accomplish a long-horizon task one small step at a time."]
+
 
 ["Declarative"]
-definition = ["A way of doing things where you declare the end result, and the system or software will get you there."]
-extended_def = "An example of this is HTML. In HTML you can define a button, and it will display a button on the screen without you having to figure out how to render such a thing."
+extended_def = "An example of this is HTML. In HTML you can define a button, and it will display a button on the screen without you having to figure out how to render it from scratch."
+
+["Declarative"]
+adjective = ["A description of a system which is predominantly used by declaring the desired end-result, and letting the system or software work to get you that result."]
 
 ["Deploy"]
+synonyms = ["Deployment"]
 
 ["Deploy".definition]
 verb = [
-  "To release software to an environment where it runs and can be used.",
+  "To push software to an environment where it can be accessed, or executed and utilised by its inteded end-users.",
 ]
 noun = [
-  "Informal: a single release of software to an environment.",
+  "Referring to an instance of software that has been pushed to an environment where it can be used by end-users.",
 ]
-
-["Deployment"]
 
 ["Dependency"]
 
@@ -191,6 +195,14 @@ synonyms = ["Evaluation Framework"]
 
 ["Coding Agent"]
 
+["End-user"]
+
 ["Harness"]
 
 ["Crypto"]
+
+["CLI"]
+synonyms = ["Command-line interface", "Command-line"]
+
+["UI"]
+synonyms = ["User Interface", "Interface"]
